@@ -22,7 +22,7 @@ const App: FC = () => {
   return (
     <View style={styles.body}>
       <View style={styles.header}>
-        <Text style={styles.title}>Add your todo!</Text>
+        <Text style={styles.title}>나의 할 일 목록🗓</Text>
       </View>
       <View style={styles.TodoFormWrapper}>
         <ToDoForm onSubmit={todoFormSubmitHandler} />
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: '#007DFF',
-    fontSize: 40,
+    color: 'gray',
+    fontSize: 24,
     fontWeight: '600',
   },
   TodoFormWrapper: {

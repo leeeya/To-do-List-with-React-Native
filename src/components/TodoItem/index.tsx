@@ -11,9 +11,9 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
   };
 
   return (
-    <TouchableOpacity style={styles.todoItemWrapper}>
-      <Text style={styles.todoTitle}>{item.todo}</Text>
-      <View style={styles.addButton}>
+    <TouchableOpacity style={true ? styles.disable : styles.todoItemWrapper}>
+      <Text style={true ? styles.done : styles.todoTitle}>{item.todo}</Text>
+      <View style={styles.deleteButton}>
         <Button title={'삭제'} onPress={() => deleteButtonHandler(item.id)} />
       </View>
     </TouchableOpacity>
@@ -31,12 +31,23 @@ const styles = StyleSheet.create({
   },
   todoTitle: {
     width: '80%',
-    color: '#007DFF',
     fontSize: 20,
     fontWeight: '600',
   },
-  addButton: {
+  deleteButton: {
     width: '20%',
+  },
+  disable: {
+    width: '80%',
+    fontSize: 20,
+    fontWeight: '600',
+    backgroundColor: 'gray',
+  },
+  done: {
+    width: '80%',
+    fontSize: 20,
+    fontWeight: '600',
+    textDecorationLine: 'line-through',
   },
 });
 
