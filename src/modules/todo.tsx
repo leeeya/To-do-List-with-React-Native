@@ -34,57 +34,18 @@ export const addTodo = createAsyncThunk(
   },
 );
 
-// export const deletePerson = createAsyncThunk(
-//   'todo/deleteTodo',
-//   async (id: string, { rejectWithValue }) => {
-//     try {
-//       await api.deletePerson(id);
+export const deleteTodo = createAsyncThunk(
+  'todo/deleteTodo',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const deletedTodoId = await api.deleteTodo(id);
 
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error);
-//     }
-//   },
-// );
-
-// const reducers = {
-//   initTodo: (state: initialTodo) => {
-//     state.isLoading = true;
-//   },
-//   initTodoSuccess: (state: initialTodo, action: PayloadAction<TodoItem[]>) => {
-//     state.isLoading = false;
-//     state.todoList = action.payload;
-//   },
-//   initTodoFailure: (
-//     state: initialTodo,
-//     action: PayloadAction<null | Error>,
-//   ) => {
-//     state.isLoading = false;
-//     state.error = action.payload;
-//   },
-//   addTodo: (state: initialTodo) => {
-//     state.isLoading = true;
-//   },
-//   addTodoSuccess: (state: initialTodo, action: PayloadAction<TodoItem>) => {
-//     state.isLoading = false;
-//     state.todoList = [...state.todoList, action.payload];
-//   },
-//   addTodoFailure: (state: initialTodo, action: PayloadAction<null | Error>) => {
-//     state.isLoading = false;
-//     state.error = action.payload;
-//   },
-//   removeTodo: (state: initialTodo) => {
-//     state.isLoading = true;
-//   },
-//   removeTodoSuccess: (state: initialTodo, { payload }: any) => {
-//     state.isLoading = false;
-//     state.todoList = payload;
-//   },
-//   removeTodoFailure: (state: initialTodo, { payload }: any) => {
-//     state.isLoading = false;
-//     state.error = payload;
-//   },
-// };
+      return deletedTodoId;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
 const todoSlice = createSlice({
   name: 'todo',
@@ -120,6 +81,22 @@ const todoSlice = createSlice({
       },
     );
     builder.addCase(addTodo.rejected, (state) => {
+      state.loading = 'idle';
+      state.error = Error('add todo failed');
+    });
+    builder.addCase(deleteTodo.pending, (state) => {
+      if (state.loading === 'idle') {
+        state.loading = 'pending';
+      }
+    });
+    builder.addCase(
+      deleteTodo.fulfilled,
+      (state, { payload }: PayloadAction<any>) => {
+        state.loading = 'idle';
+        state.todoList = state.todoList.filter((item) => item.id !== payload);
+      },
+    );
+    builder.addCase(deleteTodo.rejected, (state) => {
       state.loading = 'idle';
       state.error = Error('add todo failed');
     });

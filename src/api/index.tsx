@@ -15,9 +15,11 @@ export const setTodo = async (todo: TodoItem) => {
       await AsyncStorage.setItem('todoList', JSON.stringify([todo]));
     }
   } catch (error) {
-    AsyncStorage.clear();
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(asyncStorageKeys);
     console.error(error);
   }
+
   return todo;
 };
 
@@ -26,12 +28,37 @@ export const getTodoList = async () => {
     const data = await AsyncStorage.getItem('todoList');
     if (data) {
       const todoList = JSON.parse(data);
+
       return todoList;
     } else {
       return [];
     }
   } catch (error) {
-    AsyncStorage.clear();
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(asyncStorageKeys);
+    console.error(error);
+  }
+};
+
+export const deleteTodo = async (id: number) => {
+  try {
+    const prevData = await AsyncStorage.getItem('todoList');
+
+    if (prevData) {
+      const prevTodoList = JSON.parse(prevData);
+      const currentTodoList = JSON.stringify(
+        prevTodoList.filter((todo: TodoItem) => todo.id !== id),
+      );
+
+      await AsyncStorage.setItem('todoList', currentTodoList);
+
+      return id;
+    } else {
+      return Error('not exisit todo');
+    }
+  } catch (error) {
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(asyncStorageKeys);
     console.error(error);
   }
 };

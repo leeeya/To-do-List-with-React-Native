@@ -1,10 +1,11 @@
 export interface TodoItem {
-  key: number;
+  id: number;
   todo: string;
 }
 
 export interface TodoItemProps {
   item: TodoItem;
+  onPress?: (id: number) => void;
 }
 
 export interface TodoListProps {

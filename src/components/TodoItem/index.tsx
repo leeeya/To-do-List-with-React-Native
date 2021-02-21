@@ -1,18 +1,43 @@
 import React, { FC } from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { TodoItemProps } from '../../types';
+import { useDispatch } from 'react-redux';
+import { deleteTodo } from '../../modules/todo';
 
 const TodoItem: FC<TodoItemProps> = ({ item }) => {
+  const dispatch = useDispatch();
   const deleteButtonHandler = (id: number) => {
-    console.log(id);
+    dispatch(deleteTodo(id));
   };
 
   return (
-    <View>
-      <Text>{item.todo}</Text>
-      <Button title={'delete'} onPress={() => deleteButtonHandler(item.key)} />
-    </View>
+    <TouchableOpacity style={styles.todoItemWrapper}>
+      <Text style={styles.todoTitle}>{item.todo}</Text>
+      <View style={styles.addButton}>
+        <Button title={'삭제'} onPress={() => deleteButtonHandler(item.id)} />
+      </View>
+    </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  todoItemWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: 'gray',
+  },
+  todoTitle: {
+    width: '80%',
+    color: '#007DFF',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  addButton: {
+    width: '20%',
+  },
+});
 
 export default TodoItem;

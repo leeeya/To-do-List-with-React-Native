@@ -8,7 +8,7 @@ const TodoList: FC<TodoListProps> = ({ items }) => {
     <FlatList
       data={items}
       renderItem={({ item }) => <TodoItem item={item} />}
-      keyExtractor={(item) => item.key.toString()}
+      keyExtractor={(item) => item.id.toString()}
     />
   );
 };

@@ -5,13 +5,13 @@ import { ToDoFormProps } from '../../types';
 
 const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
   const [todoItem, setTodoItem] = useState<TodoItem>({
-    key: Date.now(),
+    id: Date.now(),
     todo: '',
   });
 
   const todoFormInputHandler = (todo: string) => {
     setTodoItem({
-      key: Date.now(),
+      id: Date.now(),
       todo,
     });
   };
@@ -19,7 +19,7 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
   const todoFormButtonHandler = () => {
     onSubmit(todoItem);
     setTodoItem({
-      key: Date.now(),
+      id: Date.now(),
       todo: '',
     });
   };
