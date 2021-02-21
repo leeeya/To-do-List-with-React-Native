@@ -22,6 +22,7 @@
     "@types/react-test-renderer": "^16.9.2",
     "babel-jest": "^25.1.0",
     "eslint": "^6.5.1",
+    "husky": "^5.0.9",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
@@ -48,5 +49,12 @@
       "json",
       "node"
     ]
+  },
+  "lint": "tslint src/**/*.ts* --project tsconfig.json",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
   }
 }

@@ -1,22 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React, { FC } from 'react';
-import { View, Text } from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import ToDoForm from './components/TodoForm';
 
 const App: FC = () => {
+  const [todos, setAddTodo] = useState<string>('');
+  console.log(todos);
+  const todoFormSubmitHandler = (todo: string) => {
+    console.log(todo);
+    setAddTodo(todo);
+  };
+
   return (
-    <View>
-      <Text>Debug</Text>
+    <View style={styles.body}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Add your todo!</Text>
+      </View>
+      <View style={styles.TodoWrapper}>
+        <ToDoForm onSubmit={todoFormSubmitHandler} />
+      </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#e8f1f5',
+  },
+  header: {
+    flex: 0.25,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    color: '#007DFF',
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  TodoWrapper: {
+    flex: 0.7,
+    justifyContent: 'flex-start',
+  },
+});
 
 export default App;
