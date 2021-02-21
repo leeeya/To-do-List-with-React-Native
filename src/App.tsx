@@ -1,13 +1,14 @@
 import React, { FC, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import ToDoForm from './components/TodoForm';
+import TodoList from './components/TodoList';
+import { TodoItem } from './types';
 
 const App: FC = () => {
-  const [todos, setAddTodo] = useState<string>('');
-  console.log(todos);
-  const todoFormSubmitHandler = (todo: string) => {
-    console.log(todo);
-    setAddTodo(todo);
+  const [todoList, setTodoList] = useState<TodoItem[]>([]);
+
+  const todoFormSubmitHandler = (todo: TodoItem) => {
+    setTodoList((prev) => [...prev, todo]);
   };
 
   return (
@@ -15,8 +16,11 @@ const App: FC = () => {
       <View style={styles.header}>
         <Text style={styles.title}>Add your todo!</Text>
       </View>
-      <View style={styles.TodoWrapper}>
+      <View style={styles.TodoFormWrapper}>
         <ToDoForm onSubmit={todoFormSubmitHandler} />
+      </View>
+      <View style={styles.TodoListWrapper}>
+        <TodoList items={todoList} />
       </View>
     </View>
   );
@@ -36,12 +40,17 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#007DFF',
-    fontSize: 24,
+    fontSize: 40,
     fontWeight: '600',
   },
-  TodoWrapper: {
-    flex: 0.7,
+  TodoFormWrapper: {
+    flex: 0.15,
     justifyContent: 'flex-start',
+  },
+  TodoListWrapper: {
+    width: '100%',
+    flex: 0.6,
+    backgroundColor: '#dae1e7',
   },
 });
 

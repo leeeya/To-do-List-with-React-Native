@@ -1,15 +1,23 @@
 import React, { FC, useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
-
-interface ToDoFormProps {
-  onSubmit: (todo: string) => void;
-}
+import { TodoItem } from '../../types';
+import { ToDoFormProps } from '../../types';
 
 const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
-  const [todo, setTodo] = useState<string>('');
+  const [todoItem, setTodoItem] = useState<TodoItem>({
+    key: Date.now(),
+    todo: '',
+  });
+
+  const todoFormInputHandler = (todo: string) => {
+    setTodoItem({
+      key: Date.now(),
+      todo,
+    });
+  };
 
   const todoFormButtonHandler = () => {
-    onSubmit(todo);
+    onSubmit(todoItem);
   };
 
   return (
@@ -19,8 +27,8 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
           style={styles.todoInput}
           editable
           placeholder={'Enter your todo!'}
-          value={todo}
-          onChangeText={setTodo}
+          value={todoItem.todo}
+          onChangeText={todoFormInputHandler}
         />
         <Button title={'ADD'} onPress={todoFormButtonHandler} />
       </View>

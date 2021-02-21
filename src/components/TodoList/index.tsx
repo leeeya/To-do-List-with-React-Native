@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
-
-interface TodoListProps {
-  items: [];
-}
+import { FlatList } from 'react-native';
+import { TodoListProps } from '../../types';
+import TodoItem from '../TodoItem';
 
 const TodoList: FC<TodoListProps> = ({ items }) => {
-  return <View>{items.map((item: string) => item)}</View>;
+  return (
+    <FlatList
+      data={items}
+      renderItem={({ item }) => <TodoItem item={item} />}
+    />
+  );
 };
 
 export default TodoList;
