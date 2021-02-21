@@ -1,14 +1,22 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import ToDoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import { TodoItem } from './types';
+import { addTodo, getTodoList } from './modules/todo';
+import { RootState } from './modules/rootReducer';
 
 const App: FC = () => {
-  const [todoList, setTodoList] = useState<TodoItem[]>([]);
+  const dispatch = useDispatch();
+  const todoList = useSelector((state: RootState) => state.todo.todoList);
+
+  useEffect(() => {
+    dispatch(getTodoList());
+  }, [dispatch]);
 
   const todoFormSubmitHandler = (todo: TodoItem) => {
-    setTodoList((prev) => [...prev, todo]);
+    dispatch(addTodo(todo));
   };
 
   return (

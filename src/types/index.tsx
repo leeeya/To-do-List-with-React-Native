@@ -14,3 +14,9 @@ export interface TodoListProps {
 export interface ToDoFormProps {
   onSubmit: (todo: TodoItem) => void;
 }
+
+export interface InitialTodo {
+  loading: string;
+  todoList: TodoItem[];
+  error: null | Error;
+}

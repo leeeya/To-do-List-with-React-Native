@@ -18,6 +18,10 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
 
   const todoFormButtonHandler = () => {
     onSubmit(todoItem);
+    setTodoItem({
+      key: Date.now(),
+      todo: '',
+    });
   };
 
   return (
