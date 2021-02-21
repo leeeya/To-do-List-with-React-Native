@@ -47,6 +47,19 @@ export const deleteTodo = createAsyncThunk(
   },
 );
 
+export const updateTodo = createAsyncThunk(
+  'todo/updateTodo',
+  async (id: number, { rejectWithValue }) => {
+    try {
+      const updatedTodoId = await api.updateTodo(id);
+
+      return updatedTodoId;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
+
 const todoSlice = createSlice({
   name: 'todo',
   initialState,
@@ -98,7 +111,24 @@ const todoSlice = createSlice({
     );
     builder.addCase(deleteTodo.rejected, (state) => {
       state.loading = 'idle';
-      state.error = Error('add todo failed');
+      state.error = Error('delete todo failed');
+    });
+    builder.addCase(updateTodo.pending, (state) => {
+      if (state.loading === 'idle') {
+        state.loading = 'pending';
+      }
+    });
+    builder.addCase(
+      updateTodo.fulfilled,
+      (state, { payload }: PayloadAction<any>) => {
+        state.loading = 'idle';
+        state.todoList = payload;
+      },
+    );
+
+    builder.addCase(updateTodo.rejected, (state) => {
+      state.loading = 'idle';
+      state.error = Error('update todo failed');
     });
   },
 });

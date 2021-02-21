@@ -1,5 +1,12 @@
 import React, { FC, useState } from 'react';
-import { Button, StyleSheet, TextInput, View, Keyboard } from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  TextInput,
+  View,
+  Keyboard,
+  Alert,
+} from 'react-native';
 import { TodoItem } from '../../types';
 import { ToDoFormProps } from '../../types';
 
@@ -7,20 +14,31 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
   const [todoItem, setTodoItem] = useState<TodoItem>({
     id: Date.now(),
     todo: '',
+    done: false,
   });
 
   const todoFormInputHandler = (todo: string) => {
     setTodoItem({
       id: Date.now(),
       todo,
+      done: false,
     });
   };
 
   const todoFormSubmitHandler = () => {
+    if (!todoItem.todo) {
+      return Alert.alert(
+        '알림',
+        '할 일을 입력해주세요😆',
+        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+        { cancelable: false },
+      );
+    }
     onSubmit(todoItem);
     setTodoItem({
       id: Date.now(),
       todo: '',
+      done: false,
     });
     Keyboard.dismiss();
   };

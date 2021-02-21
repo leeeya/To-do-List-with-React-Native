@@ -2,46 +2,51 @@ import React, { FC } from 'react';
 import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { TodoItemProps } from '../../types';
 import { useDispatch } from 'react-redux';
-import { deleteTodo } from '../../modules/todo';
+import { deleteTodo, updateTodo } from '../../modules/todo';
 
 const TodoItem: FC<TodoItemProps> = ({ item }) => {
   const dispatch = useDispatch();
-  const deleteButtonHandler = (id: number) => {
-    dispatch(deleteTodo(id));
+  const deleteButtonHandler = () => {
+    dispatch(deleteTodo(item.id));
+  };
+  const disableHandler = () => {
+    dispatch(updateTodo(item.id));
+    console.log(item.done);
   };
 
   return (
-    <TouchableOpacity style={true ? styles.disable : styles.todoItemWrapper}>
-      <Text style={true ? styles.done : styles.todoTitle}>{item.todo}</Text>
+    <View style={styles.todoItemWrapper}>
+      <TouchableOpacity
+        style={styles.todoTitleWrapper}
+        onPress={disableHandler}>
+        <Text style={item.done ? styles.done : styles.todoTitle}>
+          {`🗂  ${item.todo}`}
+        </Text>
+      </TouchableOpacity>
       <View style={styles.deleteButton}>
-        <Button title={'삭제'} onPress={() => deleteButtonHandler(item.id)} />
+        <Button title={'삭제'} onPress={deleteButtonHandler} />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   todoItemWrapper: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    paddingLeft: 10,
     alignItems: 'center',
-    padding: 10,
-    borderBottomWidth: 1,
     borderColor: 'gray',
   },
-  todoTitle: {
+  todoTitleWrapper: {
+    flex: 1,
     width: '80%',
+  },
+  todoTitle: {
     fontSize: 20,
     fontWeight: '600',
   },
   deleteButton: {
     width: '20%',
-  },
-  disable: {
-    width: '80%',
-    fontSize: 20,
-    fontWeight: '600',
-    backgroundColor: 'gray',
   },
   done: {
     width: '80%',

@@ -62,3 +62,32 @@ export const deleteTodo = async (id: number) => {
     console.error(error);
   }
 };
+
+export const updateTodo = async (id: number) => {
+  try {
+    const prevData = await AsyncStorage.getItem('todoList');
+
+    if (prevData) {
+      const prevTodoList = JSON.parse(prevData);
+      const currentTodoList = JSON.stringify(
+        prevTodoList.map((todo: TodoItem) => {
+          if (todo.id === id) {
+            return { id: id, todo: todo.todo, done: !todo.done };
+          } else {
+            return todo;
+          }
+        }),
+      );
+
+      await AsyncStorage.setItem('todoList', currentTodoList);
+
+      return JSON.parse(currentTodoList);
+    } else {
+      return Error('not exisit todo');
+    }
+  } catch (error) {
+    const asyncStorageKeys = await AsyncStorage.getAllKeys();
+    await AsyncStorage.multiRemove(asyncStorageKeys);
+    console.error(error);
+  }
+};
