@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
 import { Button, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { TodoItemProps } from '../../types';
 import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo } from '../../modules/todo';
+import { TodoItemProps } from '../../types';
+import { TITLE } from '../../constant';
 
 const TodoItem: FC<TodoItemProps> = ({ item }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,6 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
   };
   const disableHandler = () => {
     dispatch(updateTodo(item.id));
-    console.log(item.done);
   };
 
   return (
@@ -24,7 +24,7 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
         </Text>
       </TouchableOpacity>
       <View style={styles.deleteButton}>
-        <Button title={'삭제'} onPress={deleteButtonHandler} />
+        <Button title={TITLE.DELETE} onPress={deleteButtonHandler} />
       </View>
     </View>
   );

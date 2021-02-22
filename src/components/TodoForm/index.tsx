@@ -7,8 +7,8 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
-import { TodoItem } from '../../types';
-import { ToDoFormProps } from '../../types';
+import { ToDoFormProps, TodoItem } from '../../types';
+import { TITLE, MESSAGE, NAME } from '../../constant';
 
 const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
   const [todoItem, setTodoItem] = useState<TodoItem>({
@@ -27,12 +27,9 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
 
   const todoFormSubmitHandler = () => {
     if (!todoItem.todo) {
-      return Alert.alert(
-        '알림',
-        '할 일을 입력해주세요😆',
-        [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-        { cancelable: false },
-      );
+      return Alert.alert(TITLE.NOTICE, MESSAGE.ENTER_YOUR_TODO, [
+        { text: NAME.OK },
+      ]);
     }
     onSubmit(todoItem);
     setTodoItem({
@@ -48,12 +45,12 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
       <TextInput
         style={styles.todoInput}
         editable
-        placeholder={'할 일을 입력해주세요✍️'}
+        placeholder={MESSAGE.ENTER_YOUR_TODO}
         value={todoItem.todo}
         onSubmitEditing={todoFormSubmitHandler}
         onChangeText={todoFormInputHandler}
       />
-      <Button title={'ADD'} onPress={todoFormSubmitHandler} />
+      <Button title={TITLE.ADD} onPress={todoFormSubmitHandler} />
     </View>
   );
 };

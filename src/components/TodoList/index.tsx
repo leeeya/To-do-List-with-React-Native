@@ -12,7 +12,7 @@ const TodoList: FC<TodoListProps> = ({ items }) => {
       renderItem={({ item }) => <TodoItem item={item} />}
       keyExtractor={(item) => item.id.toString()}
       ref={todoList}
-      onContentSizeChange={() => todoList?.current?.scrollToEnd()}
+      onContentSizeChange={() => todoList.current.scrollToEnd()}
     />
   );
 };

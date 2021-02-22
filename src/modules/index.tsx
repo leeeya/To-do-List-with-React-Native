@@ -2,10 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './rootReducer';
 import { createLogger } from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
+import { ENV } from '../constant';
 
 const middlewares: any = [ReduxThunk];
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== ENV.PRODUCTION) {
   const logger = createLogger();
 
   middlewares.push(logger);

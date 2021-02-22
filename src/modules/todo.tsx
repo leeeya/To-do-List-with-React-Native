@@ -1,15 +1,16 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialTodo, TodoItem } from '../types';
 import * as api from '../api';
+import { InitialTodo, TodoItem } from '../types';
+import { THUNK_TYPE, STATE, NAME, MESSAGE } from '../constant';
 
 const initialState: InitialTodo = {
-  loading: 'idle',
+  loading: STATE.IDLE,
   todoList: [],
   error: null,
 };
 
 export const getTodoList = createAsyncThunk(
-  'todo/getTodoList',
+  THUNK_TYPE.GET_TODO_LIST,
   async (_, { rejectWithValue }) => {
     try {
       const todoList = await api.getTodoList();
@@ -22,7 +23,7 @@ export const getTodoList = createAsyncThunk(
 );
 
 export const addTodo = createAsyncThunk(
-  'todo/addTodo',
+  THUNK_TYPE.ADD_TODO,
   async (todo: TodoItem, { rejectWithValue }) => {
     try {
       const addedTodo = await api.setTodo(todo);
@@ -35,12 +36,12 @@ export const addTodo = createAsyncThunk(
 );
 
 export const deleteTodo = createAsyncThunk(
-  'todo/deleteTodo',
+  THUNK_TYPE.DELETE_TODO,
   async (id: number, { rejectWithValue }) => {
     try {
-      const deletedTodoId = await api.deleteTodo(id);
+      const updatedTodoList = await api.deleteTodo(id);
 
-      return deletedTodoId;
+      return updatedTodoList;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -48,12 +49,12 @@ export const deleteTodo = createAsyncThunk(
 );
 
 export const updateTodo = createAsyncThunk(
-  'todo/updateTodo',
+  THUNK_TYPE.UPDATE_TODO,
   async (id: number, { rejectWithValue }) => {
     try {
-      const updatedTodoId = await api.updateTodo(id);
+      const updatedTodoList = await api.updateTodo(id);
 
-      return updatedTodoId;
+      return updatedTodoList;
     } catch (error) {
       return rejectWithValue(error);
     }
@@ -61,75 +62,62 @@ export const updateTodo = createAsyncThunk(
 );
 
 const todoSlice = createSlice({
-  name: 'todo',
+  name: NAME.TODO,
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTodoList.pending, (state) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
-      }
-    });
     builder.addCase(
       getTodoList.fulfilled,
       (state, { payload }: PayloadAction<TodoItem[]>) => {
-        state.loading = 'idle';
+        state.loading = STATE.IDLE;
         state.todoList = payload;
       },
     );
     builder.addCase(getTodoList.rejected, (state) => {
-      state.loading = 'idle';
-      state.error = Error('get todo list failed');
-    });
-    builder.addCase(addTodo.pending, (state) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
-      }
+      state.loading = STATE.IDLE;
+      state.error = Error(MESSAGE.CAN_NOT_GET_TODO);
     });
     builder.addCase(
       addTodo.fulfilled,
       (state, { payload }: PayloadAction<TodoItem>) => {
-        state.loading = 'idle';
+        state.loading = STATE.IDLE;
         state.todoList.push(payload);
       },
     );
     builder.addCase(addTodo.rejected, (state) => {
-      state.loading = 'idle';
-      state.error = Error('add todo failed');
-    });
-    builder.addCase(deleteTodo.pending, (state) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
-      }
+      state.loading = STATE.IDLE;
+      state.error = Error(MESSAGE.CAN_NOT_ADD_TODO);
     });
     builder.addCase(
       deleteTodo.fulfilled,
       (state, { payload }: PayloadAction<any>) => {
-        state.loading = 'idle';
-        state.todoList = state.todoList.filter((item) => item.id !== payload);
+        state.loading = STATE.IDLE;
+        state.todoList = payload;
       },
     );
     builder.addCase(deleteTodo.rejected, (state) => {
-      state.loading = 'idle';
-      state.error = Error('delete todo failed');
-    });
-    builder.addCase(updateTodo.pending, (state) => {
-      if (state.loading === 'idle') {
-        state.loading = 'pending';
-      }
+      state.loading = STATE.IDLE;
+      state.error = Error(MESSAGE.CAN_NOT_DELETE_TODO);
     });
     builder.addCase(
       updateTodo.fulfilled,
       (state, { payload }: PayloadAction<any>) => {
-        state.loading = 'idle';
+        state.loading = STATE.IDLE;
         state.todoList = payload;
       },
     );
-
     builder.addCase(updateTodo.rejected, (state) => {
-      state.loading = 'idle';
-      state.error = Error('update todo failed');
+      state.loading = STATE.IDLE;
+      state.error = Error(MESSAGE.CAN_NOT_UPDATE_TODO);
     });
+    builder.addMatcher(
+      (action) => action.type.endsWith('/pending'),
+      (state) => {
+        if (state.loading === STATE.IDLE) {
+          state.loading = STATE.PENDING;
+        }
+      },
+    );
   },
 });
 

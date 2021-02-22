@@ -1,6 +1,7 @@
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { TodoItem } from '../types';
+import { TITLE, MESSAGE, NAME } from '../constant';
 
 export const setTodo = async (todo: TodoItem) => {
   try {
@@ -15,8 +16,9 @@ export const setTodo = async (todo: TodoItem) => {
       await AsyncStorage.setItem('todoList', JSON.stringify([todo]));
     }
   } catch (error) {
-    const asyncStorageKeys = await AsyncStorage.getAllKeys();
-    await AsyncStorage.multiRemove(asyncStorageKeys);
+    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_ADD_TODO, [{ text: NAME.OK }], {
+      cancelable: false,
+    });
     console.error(error);
   }
 
@@ -34,8 +36,9 @@ export const getTodoList = async () => {
       return [];
     }
   } catch (error) {
-    const asyncStorageKeys = await AsyncStorage.getAllKeys();
-    await AsyncStorage.multiRemove(asyncStorageKeys);
+    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_GET_TODO, [{ text: NAME.OK }], {
+      cancelable: false,
+    });
     console.error(error);
   }
 };
@@ -52,13 +55,14 @@ export const deleteTodo = async (id: number) => {
 
       await AsyncStorage.setItem('todoList', currentTodoList);
 
-      return id;
+      return JSON.parse(currentTodoList);
     } else {
-      return Error('not exisit todo');
+      return Error(MESSAGE.NOT_EXISIT_TODO);
     }
   } catch (error) {
-    const asyncStorageKeys = await AsyncStorage.getAllKeys();
-    await AsyncStorage.multiRemove(asyncStorageKeys);
+    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_DELETE_TODO, [{ text: NAME.OK }], {
+      cancelable: false,
+    });
     console.error(error);
   }
 };
@@ -83,11 +87,12 @@ export const updateTodo = async (id: number) => {
 
       return JSON.parse(currentTodoList);
     } else {
-      return Error('not exisit todo');
+      return Error(MESSAGE.NOT_EXISIT_TODO);
     }
   } catch (error) {
-    const asyncStorageKeys = await AsyncStorage.getAllKeys();
-    await AsyncStorage.multiRemove(asyncStorageKeys);
+    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_UPDATE_TODO, [{ text: NAME.OK }], {
+      cancelable: false,
+    });
     console.error(error);
   }
 };
