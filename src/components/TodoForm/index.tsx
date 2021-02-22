@@ -50,7 +50,11 @@ const ToDoForm: FC<ToDoFormProps> = ({ onSubmit }) => {
         onSubmitEditing={todoFormSubmitHandler}
         onChangeText={todoFormInputHandler}
       />
-      <Button title={TITLE.ADD} onPress={todoFormSubmitHandler} />
+      <Button
+        color={'gray'}
+        title={TITLE.ADD}
+        onPress={todoFormSubmitHandler}
+      />
     </View>
   );
 };

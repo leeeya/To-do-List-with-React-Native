@@ -24,7 +24,11 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
         </Text>
       </TouchableOpacity>
       <View style={styles.deleteButton}>
-        <Button title={TITLE.DELETE} onPress={deleteButtonHandler} />
+        <Button
+          color={'gray'}
+          title={TITLE.DELETE}
+          onPress={deleteButtonHandler}
+        />
       </View>
     </View>
   );
@@ -33,7 +37,7 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
 const styles = StyleSheet.create({
   todoItemWrapper: {
     flexDirection: 'row',
-    paddingLeft: 10,
+    padding: 15,
     alignItems: 'center',
     borderColor: 'gray',
   },
@@ -43,7 +47,7 @@ const styles = StyleSheet.create({
   },
   todoTitle: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '300',
   },
   deleteButton: {
     width: '20%',
@@ -51,7 +55,8 @@ const styles = StyleSheet.create({
   done: {
     width: '80%',
     fontSize: 20,
-    fontWeight: '600',
+    color: 'gray',
+    fontWeight: '300',
     textDecorationLine: 'line-through',
   },
 });
