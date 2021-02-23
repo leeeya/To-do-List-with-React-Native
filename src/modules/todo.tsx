@@ -75,7 +75,7 @@ const todoSlice = createSlice({
     );
     builder.addCase(getTodoList.rejected, (state) => {
       state.loading = STATE.IDLE;
-      state.error = Error(MESSAGE.CAN_NOT_GET_TODO);
+      state.error = new Error(MESSAGE.CAN_NOT_GET_TODO);
     });
     builder.addCase(
       addTodo.fulfilled,
@@ -86,7 +86,7 @@ const todoSlice = createSlice({
     );
     builder.addCase(addTodo.rejected, (state) => {
       state.loading = STATE.IDLE;
-      state.error = Error(MESSAGE.CAN_NOT_ADD_TODO);
+      state.error = new Error(MESSAGE.CAN_NOT_ADD_TODO);
     });
     builder.addCase(
       deleteTodo.fulfilled,
@@ -97,7 +97,7 @@ const todoSlice = createSlice({
     );
     builder.addCase(deleteTodo.rejected, (state) => {
       state.loading = STATE.IDLE;
-      state.error = Error(MESSAGE.CAN_NOT_DELETE_TODO);
+      state.error = new Error(MESSAGE.CAN_NOT_DELETE_TODO);
     });
     builder.addCase(
       updateTodo.fulfilled,
@@ -108,7 +108,7 @@ const todoSlice = createSlice({
     );
     builder.addCase(updateTodo.rejected, (state) => {
       state.loading = STATE.IDLE;
-      state.error = Error(MESSAGE.CAN_NOT_UPDATE_TODO);
+      state.error = new Error(MESSAGE.CAN_NOT_UPDATE_TODO);
     });
     builder.addMatcher(
       (action) => action.type.endsWith('/pending'),

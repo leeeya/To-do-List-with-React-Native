@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import ToDoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
-import { TodoItem } from './types';
 import { addTodo, getTodoList } from './modules/todo';
 import { RootState } from './modules/rootReducer';
+import { TodoItem } from './types';
 
 const App: FC = () => {
   const dispatch = useDispatch();

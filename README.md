@@ -8,8 +8,8 @@
 2. [How to use](#how-to-use)
 3. [How to run](#how-to-run)
 4. [Tech Stack](#tech-stack)
-7. [Logs](#logs)
-8. [Comment](#comment)
+5. [Logs](#logs)
+6. [Comment](#comment)
 ---
 ## 📌 Feature
 1. 할 일을 추가하거나 삭제할 수 있고 목록을 확인 할 수 있습니다.
@@ -45,15 +45,11 @@
 ---
 
 ## 💻 Tech Stack
-
-- **Client**
   - TypeScript
   - React-native
   - Redux (Reduxjs/toolkit)
   - Redux-thunk
-  - Eslint
   - Jest and Enzyme
-
 ---
 
 ## ✍️ Logs
@@ -63,7 +59,6 @@
 
 - ### AsyncStorage 와 Redux-Thunk
   서버 없이 데이터를 저장하기 위해 웹의 localStorage와 비슷한 리액트 네이티브의 AsyncStorage를 사용하였습니다.과제는 기능이 많지 않아 데이터의 양도 상대적으로 적기 때문에 AsyncStorage로 서버를 대체 할 수 있지만 실서비스에서도 사용이 가능한지 궁금하였습니다. 결과적으로 서버를 완전히 대체한다는 것은 불가하지만 최적화를 통해 localStorage와 비슷한 수준의 속도로 만들어 실 사용에도 사용 할 수 있음을 알게되었습니다. AsyncStorage의 하나의 객체에 일정 데이터가 쌓이면 다음 객체를 만들어 총 데이터의 개수를 줄이는 방식으로 객체의 키와 데이터 키를 map구조에 저장하여 관리하기, 데이터 처리 횟수를 최소화 하기 위해 큐에 요청을 담아두었다가 한번에 처리하기, 메모리 캐싱하기 등 다양한 최적화 방법으로 성능을 향상시키는 방법이 있었습니다. 프로젝트의 규모가 커진다면 꼭 고려해야 할 사항이라고 생각했습니다.
-
   또한 프로젝트의 확장성을 생각하여 Redux-Thunk를 사용하여 비동기 요청에 대한 비즈니스 로직을 분리하였습니다. 규모가 작은 앱에서도 비즈니스 로직을 분리함으로써 코드가 굉장히 간결해져 가독성이 좋아졌음을 느꼈습니다.
 
 ---

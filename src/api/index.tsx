@@ -28,13 +28,11 @@ export const setTodo = async (todo: TodoItem) => {
 export const getTodoList = async () => {
   try {
     const data = await AsyncStorage.getItem('todoList');
-    if (data) {
-      const todoList = JSON.parse(data);
+    if (!data) return [];
 
-      return todoList;
-    } else {
-      return [];
-    }
+    const todoList = JSON.parse(data);
+
+    return todoList;
   } catch (error) {
     Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_GET_TODO, [{ text: NAME.OK }], {
       cancelable: false,
@@ -46,19 +44,16 @@ export const getTodoList = async () => {
 export const deleteTodo = async (id: number) => {
   try {
     const prevData = await AsyncStorage.getItem('todoList');
+    if (!prevData) throw new Error(MESSAGE.NOT_EXISIT_TODO);
 
-    if (prevData) {
-      const prevTodoList = JSON.parse(prevData);
-      const currentTodoList = JSON.stringify(
-        prevTodoList.filter((todo: TodoItem) => todo.id !== id),
-      );
+    const prevTodoList = JSON.parse(prevData);
+    const currentTodoList = JSON.stringify(
+      prevTodoList.filter((todo: TodoItem) => todo.id !== id),
+    );
 
-      await AsyncStorage.setItem('todoList', currentTodoList);
+    await AsyncStorage.setItem('todoList', currentTodoList);
 
-      return JSON.parse(currentTodoList);
-    } else {
-      return Error(MESSAGE.NOT_EXISIT_TODO);
-    }
+    return JSON.parse(currentTodoList);
   } catch (error) {
     Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_DELETE_TODO, [{ text: NAME.OK }], {
       cancelable: false,
@@ -70,25 +65,21 @@ export const deleteTodo = async (id: number) => {
 export const updateTodo = async (id: number) => {
   try {
     const prevData = await AsyncStorage.getItem('todoList');
+    if (!prevData) throw new Error(MESSAGE.NOT_EXISIT_TODO);
 
-    if (prevData) {
-      const prevTodoList = JSON.parse(prevData);
-      const currentTodoList = JSON.stringify(
-        prevTodoList.map((todo: TodoItem) => {
-          if (todo.id === id) {
-            return { id: id, todo: todo.todo, done: !todo.done };
-          } else {
-            return todo;
-          }
-        }),
-      );
+    const prevTodoList = JSON.parse(prevData);
+    const currentTodoList = JSON.stringify(
+      prevTodoList.map((todo: TodoItem) => {
+        if (todo.id !== id) {
+          return todo;
+        }
+        return { id: id, todo: todo.todo, done: !todo.done };
+      }),
+    );
 
-      await AsyncStorage.setItem('todoList', currentTodoList);
+    await AsyncStorage.setItem('todoList', currentTodoList);
 
-      return JSON.parse(currentTodoList);
-    } else {
-      return Error(MESSAGE.NOT_EXISIT_TODO);
-    }
+    return JSON.parse(currentTodoList);
   } catch (error) {
     Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_UPDATE_TODO, [{ text: NAME.OK }], {
       cancelable: false,
