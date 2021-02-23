@@ -25,7 +25,7 @@ const TodoItem: FC<TodoItemProps> = ({ item }) => {
       </TouchableOpacity>
       <View style={styles.deleteButton}>
         <Button
-          color={'gray'}
+          color={item.done ? 'black' : 'gray'}
           title={TITLE.DELETE}
           onPress={deleteButtonHandler}
         />

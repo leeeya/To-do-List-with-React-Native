@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from './rootReducer';
-import { createLogger } from 'redux-logger';
 import ReduxThunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import rootReducer from './rootReducer';
 import { ENV } from '../constant';
 
 const middlewares: any = [ReduxThunk];

@@ -1,7 +1,7 @@
 import React, { FC, useRef } from 'react';
 import { FlatList } from 'react-native';
-import { TodoListProps } from '../../types';
 import TodoItem from '../TodoItem';
+import { TodoListProps } from '../../types';
 
 const TodoList: FC<TodoListProps> = ({ items }) => {
   const todoList = useRef<any>(null);

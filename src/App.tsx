@@ -6,18 +6,12 @@ import TodoList from './components/TodoList';
 import { TodoItem } from './types';
 import { addTodo, getTodoList } from './modules/todo';
 import { RootState } from './modules/rootReducer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App: FC = () => {
   const dispatch = useDispatch();
   const todoList = useSelector((state: RootState) => state.todo.todoList);
 
   useEffect(() => {
-    const clear = async () => {
-      const asyncStorageKeys = await AsyncStorage.getAllKeys();
-      await AsyncStorage.multiRemove(asyncStorageKeys);
-    };
-    clear();
     dispatch(getTodoList());
   }, [dispatch]);
 
@@ -53,7 +47,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    color: 'gray',
+    color: '#28527a',
     fontSize: 24,
     fontWeight: '600',
   },
