@@ -1,7 +1,6 @@
-import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TodoItem } from '../types';
-import { TITLE, MESSAGE, NAME } from '../constant';
+import { MESSAGE } from '../constant';
 
 export const setTodo = async (todo: TodoItem) => {
   try {
