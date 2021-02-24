@@ -10,7 +10,7 @@ export const MESSAGE = {
   CAN_NOT_GET_TODO: '할 일을 가져오지 못했습니다.',
   CAN_NOT_DELETE_TODO: '할 일을 삭제하지 못했습니다.',
   CAN_NOT_UPDATE_TODO: '할 일을 체크 할 수 없습니다.',
-  NOT_EXISIT_TODO: '할 일이 존재하지 않습니다.',
+  NOT_EXIST_TODO: '할 일이 존재하지 않습니다.',
   ENTER_YOUR_TODO: '할 일을 입력해주세요✍️',
 };
 

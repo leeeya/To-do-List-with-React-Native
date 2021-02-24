@@ -16,9 +16,6 @@ export const setTodo = async (todo: TodoItem) => {
       await AsyncStorage.setItem('todoList', JSON.stringify([todo]));
     }
   } catch (error) {
-    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_ADD_TODO, [{ text: NAME.OK }], {
-      cancelable: false,
-    });
     console.error(error);
   }
 
@@ -34,9 +31,6 @@ export const getTodoList = async () => {
 
     return todoList;
   } catch (error) {
-    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_GET_TODO, [{ text: NAME.OK }], {
-      cancelable: false,
-    });
     console.error(error);
   }
 };
@@ -44,7 +38,7 @@ export const getTodoList = async () => {
 export const deleteTodo = async (id: number) => {
   try {
     const prevData = await AsyncStorage.getItem('todoList');
-    if (!prevData) throw new Error(MESSAGE.NOT_EXISIT_TODO);
+    if (!prevData) throw new Error(MESSAGE.NOT_EXIST_TODO);
 
     const prevTodoList = JSON.parse(prevData);
     const currentTodoList = JSON.stringify(
@@ -55,9 +49,6 @@ export const deleteTodo = async (id: number) => {
 
     return JSON.parse(currentTodoList);
   } catch (error) {
-    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_DELETE_TODO, [{ text: NAME.OK }], {
-      cancelable: false,
-    });
     console.error(error);
   }
 };
@@ -65,7 +56,7 @@ export const deleteTodo = async (id: number) => {
 export const updateTodo = async (id: number) => {
   try {
     const prevData = await AsyncStorage.getItem('todoList');
-    if (!prevData) throw new Error(MESSAGE.NOT_EXISIT_TODO);
+    if (!prevData) throw new Error(MESSAGE.NOT_EXIST_TODO);
 
     const prevTodoList = JSON.parse(prevData);
     const currentTodoList = JSON.stringify(
@@ -81,9 +72,6 @@ export const updateTodo = async (id: number) => {
 
     return JSON.parse(currentTodoList);
   } catch (error) {
-    Alert.alert(TITLE.ERROR, MESSAGE.CAN_NOT_UPDATE_TODO, [{ text: NAME.OK }], {
-      cancelable: false,
-    });
     console.error(error);
   }
 };

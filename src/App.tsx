@@ -1,15 +1,24 @@
 import React, { FC, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { Alert, View, Text, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ToDoForm from './components/TodoForm';
 import TodoList from './components/TodoList';
 import { addTodo, getTodoList } from './modules/todo';
 import { RootState } from './modules/rootReducer';
 import { TodoItem } from './types';
+import { TITLE, NAME } from '../src/constant';
 
 const App: FC = () => {
   const dispatch = useDispatch();
   const todoList = useSelector((state: RootState) => state.todo.todoList);
+  const error = useSelector((state: RootState) => state.todo.error);
+
+  useEffect(()=> {
+    if (!error) return;
+    Alert.alert(TITLE.ERROR, error.message, [{ text: NAME.OK }], {
+      cancelable: false,
+    });
+  });
 
   useEffect(() => {
     dispatch(getTodoList());
