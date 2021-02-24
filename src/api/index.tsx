@@ -15,7 +15,7 @@ export const setTodo = async (todo: TodoItem) => {
       await AsyncStorage.setItem('todoList', JSON.stringify([todo]));
     }
   } catch (error) {
-    console.error(error);
+    throw new Error(error);
   }
 
   return todo;
@@ -30,7 +30,7 @@ export const getTodoList = async () => {
 
     return todoList;
   } catch (error) {
-    console.error(error);
+    throw new Error(error);
   }
 };
 
@@ -48,7 +48,7 @@ export const deleteTodo = async (id: number) => {
 
     return JSON.parse(currentTodoList);
   } catch (error) {
-    console.error(error);
+    throw new Error(error);
   }
 };
 
@@ -71,6 +71,6 @@ export const updateTodo = async (id: number) => {
 
     return JSON.parse(currentTodoList);
   } catch (error) {
-    console.error(error);
+    throw new Error(error);
   }
 };
